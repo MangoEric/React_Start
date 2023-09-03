@@ -25,6 +25,10 @@ div {
   border-bottom: 1px solid gray;
 }
 
+.like {
+  cursor: pointer;
+}
+
 .App-logo {
   height: 40vmin;
   pointer-events: none;
