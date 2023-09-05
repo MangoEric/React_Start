@@ -5,7 +5,7 @@ import { useState } from 'react';
 function App() {
 
   let [글제목, 글제목변경] = useState(['남자 셔츠 추천', '강남 우동 맛집', '양말 추천']);
-  let [따봉, 따봉변경] = useState(0);
+  let [따봉, 따봉변경] = useState([0,0,0]);
   let [modal, setModal] = useState(false); 
 
   return (
@@ -28,18 +28,20 @@ function App() {
       }}
       >가나다 정렬</button>
 
-      <div className="list">
-        <h4>{ 글제목[0] } <span className='like' onClick={ () =>{ 따봉변경(따봉++)} }>👍</span> { 따봉 } </h4>
-        <p>9월 3일 발행</p>
-      </div>
-      <div className="list">
-        <h4>{ 글제목[1] }</h4>
-        <p>9월 3일 발행</p>
-      </div>
-      <div className="list">
-        <h4 onClick={()=>{ setModal(!modal) }}>{ 글제목[2] }</h4>
-        <p>9월 3일 발행</p>
-      </div>
+      {
+        글제목.map(function(a, i){
+          return (
+            <div className="list" key={ i }>
+              <h4>{ a } <span className='like' onClick={ () =>{
+                let copy = [...따봉];
+                copy[i] = copy[i] +1;
+                따봉변경(copy)} }>👍</span> { 따봉[i] }</h4>
+              <h5 onClick={()=>{ setModal(!modal) }}>자세히 보기</h5>
+              <p>9월 { i + 1 }일 발행</p>
+            </div>
+          )
+        })
+      }
 
       {
         modal == true ? <Modal/> : null
