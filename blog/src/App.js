@@ -6,7 +6,8 @@ function App() {
 
   let [글제목, 글제목변경] = useState(['남자 셔츠 추천', '강남 우동 맛집', '양말 추천']);
   let [따봉, 따봉변경] = useState([0,0,0]);
-  let [modal, setModal] = useState(false); 
+  let [modal, setModal] = useState(false);
+  let [selectedPost, setSelectedPost] = useState(0)
 
   return (
     <div className="App">
@@ -36,7 +37,7 @@ function App() {
                 let copy = [...따봉];
                 copy[i] = copy[i] +1;
                 따봉변경(copy)} }>👍</span> { 따봉[i] }</h4>
-              <h5 onClick={()=>{ setModal(!modal) }}>자세히 보기</h5>
+              <h5 onClick={()=>{ setModal(!modal); setSelectedPost(i); }}>자세히 보기</h5>
               <p>9월 { i + 1 }일 발행</p>
             </div>
           )
@@ -44,18 +45,18 @@ function App() {
       }
 
       {
-        modal == true ? <Modal/> : null
+        modal == true ? <Modal 글제목={ 글제목 } color="skyblue" selectedPost={selectedPost}/> : null
       }
 
     </div>
   );
 }
 
-function Modal () {
+function Modal (props) {
   return (
-    <div className="modal">
-      <h4>제목</h4>
-      <p>날짜</p>
+    <div className="modal" style={ {background : props.color} }>
+      <h4>제목 : { props.글제목[props.selectedPost] }</h4>
+      <p>날짜 : 9월 { props.selectedPost + 1 }일 </p>
       <p>상세내용</p>
     </div>
   )
