@@ -1,6 +1,7 @@
 /* eslint-disable */
 import './App.css';
 import { useState } from 'react';
+import React from 'react';
 
 function App() {
 
@@ -76,7 +77,7 @@ function App() {
         ? <Modal 글제목={ 글제목 } color="skyblue" title={ title } 글제목변경={ 글제목변경 }/> 
         : null
       }
-
+      <Modal2></Modal2>
     </div>
   );
 }
@@ -89,6 +90,25 @@ function Modal (props) {
       <p>상세내용</p>
     </div>
   )
+}
+
+class Modal2 extends React.Component {
+  constructor(props){
+    super(props)
+    this.state = {
+      name : 'ko',
+      age : 20
+    }
+  }
+  render(){
+    return(
+      <div>안녕 { this.state.name }
+        <button onClick={()=>{
+          this.setState({name : 'wow'})
+        }}>버튼</button>
+      </div>
+    )
+  }
 }
 
 export default App;
