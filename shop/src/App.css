@@ -1,3 +1,15 @@
+.main-bg {
+  height: 300px;
+  /* background-image: url(./bg.png); */
+  background-size: cover;
+  background-position: center;
+}
+.pic {
+  width: 80%;
+}
+#logo {
+  width: 2%;
+}
 .App {
   text-align: center;
 }
