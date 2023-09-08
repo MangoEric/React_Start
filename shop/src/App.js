@@ -46,7 +46,7 @@ function App() {
               </div>  
           </>
         }/>
-        <Route path="/detail" element={<Detail/>}/>
+        <Route path="/detail/:id" element={<Detail shoes={shoes}/>}/>
         <Route path="/about" element={<About/>}>
           <Route path="member" element={<div>Member<hr></hr><img src={process.env.PUBLIC_URL + '/me.png'}/></div>}/>
           <Route path="loaction" element={<div>위치</div>}/>
