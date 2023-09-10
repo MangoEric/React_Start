@@ -62,9 +62,14 @@ function App() {
 }
 
 function Card (props) {
+  let navigate = useNavigate();
   return (
-    <div className="col-md-4">
-      <img src={'https://codingapple1.github.io/shop/shoes'+ (props.shoes.id+1) +'.jpg'} className='pic'/>
+    <div className="col-md-4" key={props}>
+      <img 
+        src={'https://codingapple1.github.io/shop/shoes'+ (props.shoes.id+1) +'.jpg'} 
+        className='pic'
+        onClick={()=>{ navigate('/detail/'+props.shoes.id)}}
+        />
       <h4>{props.shoes.title}</h4>
       <p>{props.shoes.content}</p>
       <p> ₩ {props.shoes.price }</p>
