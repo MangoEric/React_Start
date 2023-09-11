@@ -4,12 +4,13 @@ import { Nav, Navbar, Container } from 'react-bootstrap';
 import 대문 from './bg.png';
 import { useState } from 'react';
 import data from './data.js';
-import { Routes, Route, Link, useNavigate, Outlet } from 'react-router-dom';
+import { Routes, Route, useNavigate, Outlet } from 'react-router-dom';
 import Detail from './routes/Detatil.js';
+import axios from 'axios';
 
 function App() {
 
-  let [shoes] = useState(data);
+  let [shoes, setShoes] = useState(data);
   let navigate = useNavigate();
   
   return (
@@ -38,11 +39,31 @@ function App() {
                   {
                     shoes.map((a,i)=>{
                       return (
-                        <Card shoes={ shoes[i] }></Card>
+                        <Card shoes={ shoes[i] } key={i}></Card>
                       )
                     })
                   }
                 </div>
+                <button className="btn btn-info"
+                  onClick={()=>{
+                    axios.get('https://codingapple1.github.io/shop/data2.json')
+                    .then((result)=>{
+                      console.log(result.data)
+                      let copy = [...shoes, ...result.data];  
+                      setShoes(copy);
+                    })
+                    .catch(()=>{
+                      console.log('실패')
+                    })
+
+                    // 동시에 여러개 ajax요청
+                    // Promise.all([ axios.get('/url1'), axios.get('/url1')])
+                    // .then(()=>{
+                    // })
+                    
+
+                  }}
+                >상품추가</button>
               </div>  
           </>
         }/>
@@ -67,7 +88,7 @@ function Card (props) {
     <div className="col-md-4" key={props}>
       <img 
         src={'https://codingapple1.github.io/shop/shoes'+ (props.shoes.id+1) +'.jpg'} 
-        className='pic'
+        className='pic' alt="nice"
         onClick={()=>{ navigate('/detail/'+props.shoes.id)}}
         />
       <h4>{props.shoes.title}</h4>
