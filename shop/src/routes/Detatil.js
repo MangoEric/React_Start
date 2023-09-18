@@ -1,6 +1,6 @@
 import { useParams } from "react-router-dom";
 import { Nav } from 'react-bootstrap';
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 function Deatail(props) {
 
@@ -9,10 +9,18 @@ function Deatail(props) {
     return x.id == id
   })
   let [tap, setTap] = useState(0);
+  let [fadeDetatil, setFadeDetail] = useState('');
+
+  useEffect(()=>{
+    setFadeDetail('end')
+    return () =>{
+      setFadeDetail('')
+    }
+  },[])
   
 
   return (
-    <div className="container">
+    <div className={'container start ' + fadeDetatil}>
       <div className="row">
         <div className="col-md-6">
           <img src={'https://codingapple1.github.io/shop/shoes'+(item.id +1)+'.jpg'} width="100%" alt="hi"/>
@@ -42,14 +50,18 @@ function Deatail(props) {
 }
 
 function TabContent({tap}) {
-  if( tap == 0 ) {
-    return <div>내용0</div>
-  }else if ( tap == 1) {
-    return <div>내용1</div>
-  }else{
-    return <div>내용2</div>
-  }
-  // return [ <div>내용0</div>, <div>내용1</div>, <div>내용2</div> ][탭]
+  let [fade, setFade] = useState('');
+  useEffect(()=>{
+    let time = setTimeout(()=>{ setFade('end') },100)
+    return () =>{
+      clearTimeout(time)
+      setFade('')
+    }
+  },[tap])
+
+  return (<div className={'start ' + fade}>
+    {[ <div>내용0</div>, <div>내용1</div>, <div>내용2</div> ][tap]}
+  </div>)
 }
 
 
