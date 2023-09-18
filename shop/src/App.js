@@ -55,13 +55,6 @@ function App() {
                     .catch(()=>{
                       console.log('실패')
                     })
-
-                    // 동시에 여러개 ajax요청
-                    // Promise.all([ axios.get('/url1'), axios.get('/url1')])
-                    // .then(()=>{
-                    // })
-                    
-
                   }}
                 >상품추가</button>
               </div>  
