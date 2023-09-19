@@ -1,8 +1,11 @@
 import { useParams } from "react-router-dom";
 import { Nav } from 'react-bootstrap';
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
+import { Context1 } from "./../App.js";
 
 function Deatail(props) {
+
+  let {stock, shoes} = useContext(Context1)
 
   let {id} = useParams();
   let item = props.shoes.find(function(x){
@@ -35,13 +38,13 @@ function Deatail(props) {
 
       <Nav variant="tabs"  defaultActiveKey="link0">
         <Nav.Item>
-          <Nav.Link onClick={()=>{ setTap(0)}} eventKey="link0">버튼0</Nav.Link>
+          <Nav.Link onClick={()=>{ setTap(0)}} eventKey="link0">{shoes[0].title}</Nav.Link>
         </Nav.Item>
         <Nav.Item>
-          <Nav.Link onClick={()=>{ setTap(1)}} eventKey="link1">버튼1</Nav.Link>
+          <Nav.Link onClick={()=>{ setTap(1)}} eventKey="link1">{shoes[1].title}</Nav.Link>
         </Nav.Item>
         <Nav.Item>
-          <Nav.Link onClick={()=>{ setTap(2)}} eventKey="link2">버튼2</Nav.Link>
+          <Nav.Link onClick={()=>{ setTap(2)}} eventKey="link2">{shoes[2].title}</Nav.Link>
         </Nav.Item>
       </Nav>
       <TabContent tap={tap}/>
@@ -51,6 +54,8 @@ function Deatail(props) {
 
 function TabContent({tap}) {
   let [fade, setFade] = useState('');
+  let {stock, shoes} = useContext(Context1)
+
   useEffect(()=>{
     let time = setTimeout(()=>{ setFade('end') },100)
     return () =>{
@@ -60,7 +65,7 @@ function TabContent({tap}) {
   },[tap])
 
   return (<div className={'start ' + fade}>
-    {[ <div>내용0</div>, <div>내용1</div>, <div>내용2</div> ][tap]}
+    {[ <div>재고 : {stock[0]}</div>, <div>재고 : {stock[1]}</div>, <div>재고 : {stock[2]}</div> ][tap]}
   </div>)
 }
 
