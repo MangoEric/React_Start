@@ -29,6 +29,7 @@ function App() {
             <Nav.Link onClick={()=>{ navigate('/about') }}>About</Nav.Link>
             <Nav.Link onClick={()=>{ navigate('/detail') }}>Detail</Nav.Link>
             <Nav.Link onClick={()=>{ navigate('/event') }}>Event</Nav.Link>
+            <Nav.Link onClick={()=>{ navigate('/cart') }}>Cart</Nav.Link>
           </Nav>
         </Container>
       </Navbar>

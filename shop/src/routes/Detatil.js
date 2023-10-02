@@ -2,6 +2,8 @@ import { useParams } from "react-router-dom";
 import { Nav } from 'react-bootstrap';
 import { useContext, useEffect, useState } from "react";
 import { Context1 } from "./../App.js";
+import { addItem } from "./../store.js"
+import { useDispatch } from "react-redux";
 
 function Deatail(props) {
 
@@ -20,7 +22,8 @@ function Deatail(props) {
       setFadeDetail('')
     }
   },[])
-  
+
+  let dispatch = useDispatch()
 
   return (
     <div className={'container start ' + fadeDetatil}>
@@ -32,7 +35,10 @@ function Deatail(props) {
           <h4 className="pt-5">{item.title}</h4>
           <p>{item.content}</p>
           <p>{item.price}</p>
-          <button className="btn btn-danger">주문하기</button>
+          <button className="btn btn-danger" onClick={()=>{
+              dispatch(addItem( {id : item.id , name : item.title , count : 1 } ))
+            }}
+          >주문하기</button>
         </div>
       </div>
 
