@@ -2,7 +2,7 @@ import './App.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { Nav, Navbar, Container } from 'react-bootstrap';
 import 대문 from './bg.png';
-import { createContext, useState } from 'react';
+import { createContext, useEffect, useState } from 'react';
 import data from './data.js';
 import { Routes, Route, useNavigate, Outlet } from 'react-router-dom';
 import Detail from './routes/Detatil.js';
@@ -13,6 +13,10 @@ export let Context1 = createContext()
 
 
 function App() {
+
+  useEffect(()=>{
+    localStorage.setItem('watched', JSON.stringify([]))
+  },[])
 
   let [shoes, setShoes] = useState(data);
   let [stock] = useState([10, 11, 12]);

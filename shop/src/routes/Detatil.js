@@ -17,6 +17,15 @@ function Deatail(props) {
   let [fadeDetatil, setFadeDetail] = useState('');
 
   useEffect(()=>{
+    let arr = localStorage.getItem('watched')
+    arr = JSON.parse(arr)
+    arr.push(item.id)
+    arr = new Set(arr)
+    arr = Array.from(arr)
+    localStorage.setItem('watched', JSON.stringify(arr))
+  },[])
+
+  useEffect(()=>{
     setFadeDetail('end')
     return () =>{
       setFadeDetail('')
