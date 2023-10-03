@@ -8,6 +8,7 @@ import { Routes, Route, useNavigate, Outlet } from 'react-router-dom';
 import Detail from './routes/Detatil.js';
 import axios from 'axios';
 import Cart from './routes/Cart.js';
+import { useQuery } from "react-query"
 
 export let Context1 = createContext()
 
@@ -22,6 +23,13 @@ function App() {
   let [stock] = useState([10, 11, 12]);
 
   let navigate = useNavigate();
+
+  let result = useQuery('query',()=>
+    axios.get('https://codingapple1.github.io/userdata.json').then((a)=>{ 
+      return a.data
+    }),
+    { staleTime : 2000 } //2초마다 갱신하도록 (지우면 끌 수 있음)
+  )
   
   return (
     <div className="App">
@@ -31,9 +39,19 @@ function App() {
           <Nav className="me-auto">
             <Nav.Link onClick={()=>{ navigate('/') }}>Home</Nav.Link>
             <Nav.Link onClick={()=>{ navigate('/about') }}>About</Nav.Link>
-            <Nav.Link onClick={()=>{ navigate('/detail') }}>Detail</Nav.Link>
             <Nav.Link onClick={()=>{ navigate('/event') }}>Event</Nav.Link>
             <Nav.Link onClick={()=>{ navigate('/cart') }}>Cart</Nav.Link>
+          </Nav>
+          <Nav className='ms-auto' style={{ color : 'white'}}>
+            {
+              result.isLoading && '로딩중'
+            }
+            {
+              result.error && '에러남'
+            }
+            {
+              result.data && result.data.name
+            }
           </Nav>
         </Container>
       </Navbar>
