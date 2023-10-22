@@ -1,15 +1,10 @@
 import './App.css';
-import { atom, useRecoilState } from 'recoil'
-
-const countState = atom({
-  key: "count",
-  default: 10
-})
+import { useRecoilState } from 'recoil'
+import { countState } from './atom'
 
 function App() {
   return (
     <div>
-      hello Recoil
       <Counter/>
       <DisplayCounter/>
     </div>
