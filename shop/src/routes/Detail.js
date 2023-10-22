@@ -1,6 +1,6 @@
 import { useParams } from "react-router-dom";
 import { Nav } from 'react-bootstrap';
-import { useContext, useEffect, useState } from "react";
+import { useContext, useDeferredValue, useEffect, useState, useTransition } from "react";
 import { Context1 } from "../App.js";
 import { addItem } from "../store.js"
 import { useDispatch } from "react-redux";
@@ -63,6 +63,7 @@ function Deatail(props) {
         </Nav.Item>
       </Nav>
       <TabContent tap={tap}/>
+      <Wow></Wow>
     </div>
   )
 }
@@ -82,6 +83,31 @@ function TabContent({tap}) {
   return (<div className={'start ' + fade}>
     {[ <div>재고 : {stock[0]}</div>, <div>재고 : {stock[1]}</div>, <div>재고 : {stock[2]}</div> ][tap]}
   </div>)
+}
+
+let arr = new Array(10000).fill(0)
+
+function Wow(){
+
+  let [name, setName] = useState('')
+  let [isPending, startTransition] = useTransition();
+  let state = useDeferredValue(name) // 늦게처리를 원하는 state
+
+  return(
+    <div>
+      <input onChange={(e)=> {
+        startTransition(()=>{
+          setName(e.target.value)
+          })
+        }}/>
+      {
+        isPending ? '로딩중' :
+        arr.map(()=>{
+          return <div>{name}</div>
+        })
+      }
+    </div>
+  )
 }
 
 
