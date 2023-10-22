@@ -2,11 +2,28 @@ import { Table } from 'react-bootstrap'
 import { useDispatch, useSelector } from "react-redux"
 import { changeName, addAge } from './../store/userSlice.js'
 import { addCount } from './../store.js'
+import { useState, memo, useMemo } from 'react'
+
+let Child = memo( function(){
+  console.log('재랜더링')
+  return <div>자식</div>
+})
+
+function unlimitied(){
+  let num = 0;
+  for(let i = 0 ; i < 1000; i++) {
+      num += i;
+  }
+  return num
+}
 
 function Cart() {
 
   let state = useSelector((state)=>{ return state })
   let dispatch = useDispatch();
+  let [count, setCount] = useState(0)
+
+  let result = useMemo(()=>{return console.log(unlimitied())},[state])
 
   return (
     <div>
@@ -45,7 +62,9 @@ function Cart() {
             )
           }
         </tbody>
-      </Table> 
+      </Table>
+      <Child></Child>
+      <button onClick={()=>{setCount(count+1)}}>+</button>
     </div>
   )
 }
