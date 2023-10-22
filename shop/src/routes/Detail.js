@@ -1,8 +1,8 @@
 import { useParams } from "react-router-dom";
 import { Nav } from 'react-bootstrap';
 import { useContext, useEffect, useState } from "react";
-import { Context1 } from "./../App.js";
-import { addItem } from "./../store.js"
+import { Context1 } from "../App.js";
+import { addItem } from "../store.js"
 import { useDispatch } from "react-redux";
 
 function Deatail(props) {
@@ -14,7 +14,7 @@ function Deatail(props) {
     return x.id == id
   })
   let [tap, setTap] = useState(0);
-  let [fadeDetatil, setFadeDetail] = useState('');
+  let [fadeDetail, setFadeDetail] = useState('');
 
   useEffect(()=>{
     let arr = localStorage.getItem('watched')
@@ -35,7 +35,7 @@ function Deatail(props) {
   let dispatch = useDispatch()
 
   return (
-    <div className={'container start ' + fadeDetatil}>
+    <div className={'container start ' + fadeDetail}>
       <div className="row">
         <div className="col-md-6">
           <img src={'https://codingapple1.github.io/shop/shoes'+(item.id +1)+'.jpg'} width="100%" alt="hi"/>

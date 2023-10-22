@@ -2,16 +2,18 @@ import './App.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { Nav, Navbar, Container } from 'react-bootstrap';
 import 대문 from './bg.png';
-import { createContext, useEffect, useState } from 'react';
+import { createContext, useEffect, useState, lazy, Suspense } from 'react';
 import data from './data.js';
 import { Routes, Route, useNavigate, Outlet } from 'react-router-dom';
-import Detail from './routes/Detatil.js';
+// import Detail from './routes/Detail.js';
 import axios from 'axios';
-import Cart from './routes/Cart.js';
+// import Cart from './routes/Cart.js';
 import { useQuery } from "react-query"
 
 export let Context1 = createContext()
 
+const Detail = lazy( () => import('./routes/Detail.js'));
+const Cart = lazy( () => import('./routes/Cart.js'));
 
 function App() {
 
@@ -55,56 +57,60 @@ function App() {
           </Nav>
         </Container>
       </Navbar>
-      <Routes>
-        <Route path="/" element={
-          <>
-            <div className="main-bg" style={ { backgroundImage : 'url('+ 대문 +')' } }></div>
-              <div>
-                <img src={process.env.PUBLIC_URL + '/logo192.png'} id="logo"/>
-                Welcome To Eric's Shop
-              </div>
-              <div className="container">
-                <div className="row">
-                  {
-                    shoes.map((a,i)=>{
-                      return (
-                        <Card shoes={ shoes[i] } key={i}></Card>
-                      )
-                    })
-                  }
+      <Suspense fallback={<div>로딩중</div>}>
+        <Routes>
+          <Route path="/" element={
+            <>
+              <div className="main-bg" style={ { backgroundImage : 'url('+ 대문 +')' } }></div>
+                <div>
+                  <img src={process.env.PUBLIC_URL + '/logo192.png'} id="logo"/>
+                  Welcome To Eric's Shop
                 </div>
-                <button className="btn btn-info"
-                  onClick={()=>{
-                    axios.get('https://codingapple1.github.io/shop/data2.json')
-                    .then((result)=>{
-                      console.log(result.data)
-                      let copy = [...shoes, ...result.data];  
-                      setShoes(copy);
-                    })
-                    .catch(()=>{
-                      console.log('실패')
-                    })
-                  }}
-                >상품추가</button>
-              </div>  
-          </>
-        }/>
-        <Route path="/detail/:id" element={
-          <Context1.Provider value={{stock, shoes}}>
-            <Detail shoes={shoes}/>
-          </Context1.Provider>
+                <div className="container">
+                  <div className="row">
+                    {
+                      shoes.map((a,i)=>{
+                        return (
+                          <Card shoes={ shoes[i] } key={i}></Card>
+                        )
+                      })
+                    }
+                  </div>
+                  <button className="btn btn-info"
+                    onClick={()=>{
+                      axios.get('https://codingapple1.github.io/shop/data2.json')
+                      .then((result)=>{
+                        console.log(result.data)
+                        let copy = [...shoes, ...result.data];  
+                        setShoes(copy);
+                      })
+                      .catch(()=>{
+                        console.log('실패')
+                      })
+                    }}
+                  >상품추가</button>
+                </div>  
+            </>
           }/>
-        <Route path="/about" element={<About/>}>
-          <Route path="member" element={<div>Member<hr></hr><img src={process.env.PUBLIC_URL + '/me.png'}/></div>}/>
-          <Route path="loaction" element={<div>위치</div>}/>
-        </Route>
-        <Route path="/event" element={<EventPage/>}>
-          <Route path="one" element={<p>첫 주문시 양배추즙 서비스</p>}></Route>
-          <Route path="two" element={<p>생일기념 쿠폰받기</p>}></Route>
-        </Route>
-        <Route path="/cart" element={<Cart/>}/>
-        <Route path="*" element={<div>404</div>}/>
-      </Routes>
+          <Route path="/detail/:id" element={
+            <Context1.Provider value={{stock, shoes}}>
+              <Suspense fallback={<div>로딩중</div>}>
+                <Detail shoes={shoes}/>
+              </Suspense>
+            </Context1.Provider>
+            }/>
+          <Route path="/about" element={<About/>}>
+            <Route path="member" element={<div>Member<hr></hr><img src={process.env.PUBLIC_URL + '/me.png'}/></div>}/>
+            <Route path="loaction" element={<div>위치</div>}/>
+          </Route>
+          <Route path="/event" element={<EventPage/>}>
+            <Route path="one" element={<p>첫 주문시 양배추즙 서비스</p>}></Route>
+            <Route path="two" element={<p>생일기념 쿠폰받기</p>}></Route>
+          </Route>
+          <Route path="/cart" element={<Cart/>}/>
+          <Route path="*" element={<div>404</div>}/>
+        </Routes>
+      </Suspense>
     </div>
   );
 }
