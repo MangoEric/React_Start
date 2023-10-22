@@ -63,7 +63,7 @@ function Deatail(props) {
         </Nav.Item>
       </Nav>
       <TabContent tap={tap}/>
-      <Wow></Wow>
+      {/* <Wow></Wow> */}
     </div>
   )
 }
@@ -85,30 +85,30 @@ function TabContent({tap}) {
   </div>)
 }
 
-let arr = new Array(10000).fill(0)
+// let arr = new Array(10000).fill(0)
 
-function Wow(){
+// function Wow(){
 
-  let [name, setName] = useState('')
-  let [isPending, startTransition] = useTransition();
-  let state = useDeferredValue(name) // 늦게처리를 원하는 state
+//   let [name, setName] = useState('')
+//   let [isPending, startTransition] = useTransition();
+//   let state = useDeferredValue(name) // 늦게처리를 원하는 state
 
-  return(
-    <div>
-      <input onChange={(e)=> {
-        startTransition(()=>{
-          setName(e.target.value)
-          })
-        }}/>
-      {
-        isPending ? '로딩중' :
-        arr.map(()=>{
-          return <div>{name}</div>
-        })
-      }
-    </div>
-  )
-}
+//   return(
+//     <div>
+//       <input onChange={(e)=> {
+//         startTransition(()=>{
+//           setName(e.target.value)
+//           })
+//         }}/>
+//       {
+//         isPending ? '로딩중' :
+//         arr.map(()=>{
+//           return <div>{name}</div>
+//         })
+//       }
+//     </div>
+//   )
+// }
 
 
 export default Deatail;
